@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="arapovmaui.Pages.LoginPage"
+             Title="Авторизация">
+
+    <VerticalStackLayout
+        Padding="30"
+        Spacing="15"
+        VerticalOptions="Center">
+
+        <Label
+            Text="Авторизация"
+            FontSize="30"
+            HorizontalOptions="Center"/>
+
+        <Entry
+            x:Name="LoginEntry"
+            Placeholder="Логин"/>
+
+        <Entry
+            x:Name="PasswordEntry"
+            Placeholder="Пароль"
+            IsPassword="True"/>
+
+        <Button
+            Text="Войти"
+            Clicked="LoginButton_Clicked"
+            BackgroundColor="#429488"/>
+
+        <Button
+            Text="Войти как гость"
+            Clicked="GuestButton_Clicked"
+            BackgroundColor="#429488"/>
+
+
+    </VerticalStackLayout>
+
+</ContentPage>
