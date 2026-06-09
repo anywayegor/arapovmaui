@@ -169,13 +169,81 @@ public partial class AddEditProductPage : ContentPage
 
         }
 
-        await DisplayAlert(
+        var addRequest = new AddProductRequest
 
-            "Информация",
+        {
 
-            "Добавление товара пока не подключено",
+            Article = ArticleEntry.Text ?? "",
 
-            "OK");
+            IdNameProduct =
+
+                (NameProductPicker.SelectedItem as NameProduct)?.IdNameProduct ?? 0,
+
+            Measure = MeasureEntry.Text ?? "",
+
+            Price = decimal.TryParse(
+
+                PriceEntry.Text,
+
+                out var addPrice)
+
+                    ? addPrice
+
+                    : 0,
+
+            IdSupplier =
+
+                (SupplierPicker.SelectedItem as Supplier)?.IdSupplier ?? 0,
+
+            IdCreator =
+
+                (CreatorPicker.SelectedItem as Creator)?.IdCreator ?? 0,
+
+            IdCategoryProduct =
+
+                (CategoryPicker.SelectedItem as CategoryProduct)?.IdCategoryProduct ?? 0,
+
+            Discount = DiscountEntry.Text ?? "0",
+
+            QuantityInStock = QuantityEntry.Text ?? "0",
+
+            Description = DescriptionEntry.Text ?? "",
+
+            Photo = ""
+
+        };
+
+        bool addResult = await ApiService.AddProduct(addRequest);
+
+        if (addResult)
+
+        {
+
+            await DisplayAlert(
+
+                "Успех",
+
+                "Товар добавлен",
+
+                "OK");
+
+            await Navigation.PopAsync();
+
+        }
+
+        else
+
+        {
+
+            await DisplayAlert(
+
+                "Ошибка",
+
+                "Не удалось добавить товар",
+
+                "OK");
+
+        }
 
     }
 
