@@ -14,6 +14,8 @@
             FontSize="30"
             HorizontalOptions="Center"/>
 
+        <Image Source="logo.png" HeightRequest="90" HorizontalOptions="Center"/>
+
         <Entry
             x:Name="LoginEntry"
             Placeholder="Логин"/>
@@ -26,12 +28,14 @@
         <Button
             Text="Войти"
             Clicked="LoginButton_Clicked"
-            BackgroundColor="#429488"/>
+            BackgroundColor="#00FA9A"
+            TextColor="Black"/>
 
         <Button
             Text="Войти как гость"
             Clicked="GuestButton_Clicked"
-            BackgroundColor="#429488"/>
+            BackgroundColor="#00FA9A"
+            TextColor="Black"/>
 
 
     </VerticalStackLayout>

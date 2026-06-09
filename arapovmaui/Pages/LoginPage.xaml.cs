@@ -1,33 +1,61 @@
 using arapovmaui.Helpers;
-using arapovmaui.Models;
+
+using arapovmaui.Services;
 
 namespace arapovmaui.Pages;
 
 public partial class LoginPage : ContentPage
+
 {
+
     public LoginPage()
+
     {
+
         InitializeComponent();
+
     }
 
     private async void LoginButton_Clicked(object sender, EventArgs e)
+
     {
-        AppData.CurrentUser = new User
+
+        var user = await ApiService.Login(
+
+            LoginEntry.Text ?? "",
+
+            PasswordEntry.Text ?? "");
+
+        if (user == null)
+
         {
-            IdUser = 1,
-            FirstName = "Иван",
-            LastName = "Иванов",
-            Patronumic = "Иванович",
-            Role = "Менеджер"
-        };
+
+            await DisplayAlert(
+
+                "Ошибка",
+
+                "Неверный логин или пароль",
+
+                "OK");
+
+            return;
+
+        }
+
+        AppData.CurrentUser = user;
 
         await Navigation.PushAsync(new ProductsPage());
+
     }
 
     private async void GuestButton_Clicked(object sender, EventArgs e)
+
     {
+
         AppData.CurrentUser = null;
 
         await Navigation.PushAsync(new ProductsPage());
+
     }
+
 }

@@ -1,8 +1,20 @@
 ﻿namespace arapovmaui.Models;
 
 public class Product
+
 {
+
     public int IdProduct { get; set; }
+
+    public int IdNameProduct { get; set; }
+
+    public int IdSupplier { get; set; }
+
+    public int IdCreator { get; set; }
+
+    public int IdCategoryProduct { get; set; }
+
+    public string Article { get; set; } = "";
 
     public string ProductName { get; set; } = "";
 
@@ -18,24 +30,72 @@ public class Product
 
     public string Measure { get; set; } = "";
 
-    public int QuantityInStock { get; set; }
+    public string QuantityInStock { get; set; } = "";
 
-    public int Discount { get; set; }
+    public string Discount { get; set; } = "";
 
-    public string Photo { get; set; } = "photo.png.jpg";
+    private string _photo = "";
 
-    public bool HasGreenDiscount => Discount >= 15;
+    public string Photo
 
-    public bool IsOutOfStock => QuantityInStock <= 0;
+    {
 
-    public decimal FinalPrice =>
-        Price - (Price * Discount / 100m);
+        get
+
+        {
+
+            if (string.IsNullOrWhiteSpace(_photo)
+
+                || _photo == "null"
+
+                || _photo == "-"
+
+                || _photo == "Нет")
+
+            {
+
+                return "http://localhost:5095/images/no-photo.png";
+
+            }
+
+            return $"http://localhost:5095/images/{_photo}";
+
+        }
+
+        set => _photo = value;
+
+    }
+
+    public bool HasGreenDiscount =>
+
+        int.TryParse(Discount, out var d) && d >= 15;
+
+    public bool IsOutOfStock =>
+
+        int.TryParse(QuantityInStock, out var q) && q <= 0;
+
+    public decimal FinalPrice
+
+    {
+
+        get
+
+        {
+
+            int.TryParse(Discount, out var d);
+
+            return Price - (Price * d / 100m);
+
+        }
+
+    }
 
     public string StockText =>
-        QuantityInStock > 0
-            ? $"В наличии: {QuantityInStock}"
-            : "Нет в наличии";
+
+        $"В наличии: {QuantityInStock}";
 
     public string DiscountText =>
+
         $"{Discount}%";
+
 }

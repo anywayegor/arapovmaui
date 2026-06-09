@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+
+             x:Class="arapovmaui.Pages.AddEditProductPage">
+
+
+    <ScrollView>
+
+        <VerticalStackLayout Padding="20"
+
+                             Spacing="10">
+            
+            <Button x:Name="BackButton"
+                    Text="← Назад"
+                    BackgroundColor="#00FA9A"
+                    TextColor="Black"
+                    CornerRadius="5"
+                    HeightRequest="40"
+                    WidthRequest="100"
+                    HorizontalOptions="Start"
+                    Clicked="BackButton_Clicked"/>
+
+            <Image x:Name="ProductImage"
+
+                   HeightRequest="200"
+
+                   Source="photo.png"/>
+
+            <Button Text="Выбрать изображение"
+
+                    Clicked="SelectImage_Clicked"
+                    BackgroundColor="#00FA9A"
+                    TextColor="Black"/>
+       
+
+
+            <Picker x:Name="NameProductPicker"
+
+                    Title="Наименование товара"/>
+
+            <Picker x:Name="CategoryPicker"
+
+                    Title="Категория товара"/>
+
+            <Picker x:Name="CreatorPicker"
+
+                    Title="Производитель"/>
+
+            <Picker x:Name="SupplierPicker"
+
+                    Title="Поставщик"/>
+
+            <Entry x:Name="ArticleEntry"
+
+                   Placeholder="Артикул"/>
+
+            <Editor x:Name="DescriptionEntry"
+
+                    Placeholder="Описание"
+
+                    HeightRequest="100"/>
+
+            <Entry x:Name="PriceEntry"
+
+                   Placeholder="Цена"
+
+                   Keyboard="Numeric"/>
+
+            <Entry x:Name="DiscountEntry"
+
+                   Placeholder="Скидка"
+
+                   Keyboard="Numeric"/>
+
+            <Entry x:Name="QuantityEntry"
+
+                   Placeholder="Количество на складе"
+
+                   Keyboard="Numeric"/>
+
+            <Entry x:Name="MeasureEntry"
+
+                   Placeholder="Единица измерения"/>
+
+            <Button Text="Сохранить"
+
+                    BackgroundColor="#00FA9A"
+                    TextColor="Black"
+                    Clicked="SaveButton_Clicked"/>
+
+            <Button x:Name="DeleteButton"
+                    Text="Удалить товар"
+                    BackgroundColor="#7FFF00"
+                    TextColor="Black"
+
+                    Clicked="DeleteButton_Clicked"/>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>

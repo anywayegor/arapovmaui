@@ -1,73 +1,135 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+
              x:Class="arapovmaui.Pages.ProductsPage"
+
              Title="Список товаров">
+    <Grid Padding="10"
 
-    <VerticalStackLayout Padding="10">
+      RowDefinitions="Auto,Auto,Auto,Auto,Auto,*">
 
-        <Grid ColumnDefinitions="*,Auto">
+        <Grid Grid.Row="0"
+
+          ColumnDefinitions="*,Auto,Auto">
 
             <Label x:Name="UserLabel"
-                   FontAttributes="Bold"
-                   FontSize="18"/>
+
+               FontAttributes="Bold"
+
+               FontSize="18"/>
 
             <Button Grid.Column="1"
-                    Text="Выход"
-                    Clicked="ExitButton_Clicked"
-                    BackgroundColor="#7FFF00"/>
+
+                x:Name="AddButton"
+
+                Text="Добавить товар"
+
+                Clicked="AddButton_Clicked"
+
+                BackgroundColor="#00FA9A"
+                TextColor="Black"/>
+
+            <Button Grid.Column="2"
+
+                Text="Выход"
+
+                Clicked="ExitButton_Clicked"
+
+                BackgroundColor="#7FFF00"
+                TextColor="Black"/>
 
         </Grid>
 
-        <SearchBar x:Name="SearchProduct"
-                   Placeholder="Поиск товара"
-                   TextChanged="SearchProduct_TextChanged"/>
+        <SearchBar Grid.Row="1"
 
-        <Label x:Name="CountLabel"
-               FontAttributes="Bold"
-               Margin="0,5"/>
+               x:Name="SearchProduct"
 
-        <Picker x:Name="SortPicker"
-                Title="Сортировка"
-                SelectedIndexChanged="SortPicker_SelectedIndexChanged">
+               Placeholder="Поиск товара"
+
+               TextChanged="SearchProduct_TextChanged"/>
+
+        <Label Grid.Row="2"
+
+           x:Name="CountLabel"
+
+           FontAttributes="Bold"
+
+           Margin="0,5"/>
+
+        <Picker Grid.Row="3"
+
+            x:Name="SupplierPicker"
+
+            Title="Поставщик"
+
+            ItemDisplayBinding="{Binding Supplier1}"
+
+            SelectedIndexChanged="SupplierPicker_SelectedIndexChanged"/>
+
+        <Picker Grid.Row="4"
+
+            x:Name="SortPicker"
+
+            Title="Сортировка"
+
+            SelectedIndexChanged="SortPicker_SelectedIndexChanged">
 
             <Picker.Items>
+
                 <x:String>Без сортировки</x:String>
-                <x:String>По цене ↑</x:String>
-                <x:String>По цене ↓</x:String>
+
+                <x:String>Цена ↑</x:String>
+
+                <x:String>Цена ↓</x:String>
+
             </Picker.Items>
 
         </Picker>
 
-        <CollectionView x:Name="ProductsCollection">
+        <CollectionView Grid.Row="5"
+
+                x:Name="ProductsCollection"
+                        
+                SelectionMode="Single"
+
+                SelectionChanged="ProductsCollection_SelectionChanged">
 
             <CollectionView.ItemTemplate>
 
                 <DataTemplate>
 
                     <Frame Margin="10"
-                           Padding="15"
-                           BorderColor="Black">
 
-                        <!-- ПОДСВЕТКА ВСЕЙ КАРТОЧКИ -->
+                       Padding="15"
+
+                       BorderColor="Black">
 
                         <Frame.Triggers>
 
                             <DataTrigger TargetType="Frame"
-                                         Binding="{Binding HasGreenDiscount}"
-                                         Value="True">
+
+                                     Binding="{Binding HasGreenDiscount}"
+
+                                     Value="True">
 
                                 <Setter Property="BackgroundColor"
-                                        Value="#2E8B57"/>
+
+                                    Value="#2E8B57"/>
 
                             </DataTrigger>
 
                             <DataTrigger TargetType="Frame"
-                                         Binding="{Binding IsOutOfStock}"
-                                         Value="True">
+
+                                     Binding="{Binding IsOutOfStock}"
+
+                                     Value="True">
 
                                 <Setter Property="BackgroundColor"
-                                        Value="#D9F2FF"/>
+
+                                    Value="#D9F2FF"/>
 
                             </DataTrigger>
 
@@ -75,34 +137,40 @@
 
                         <Grid ColumnDefinitions="180,*,120">
 
-                            <!-- ФОТО -->
-
                             <Frame Grid.Column="0"
-                                   HeightRequest="140"
-                                   WidthRequest="140"
-                                   Margin="10"
-                                   BorderColor="Gray">
+
+                               HeightRequest="140"
+
+                               WidthRequest="140"
+
+                               Margin="10"
+
+                               BorderColor="Gray">
 
                                 <Image Source="{Binding Photo}"
-                                       Aspect="AspectFit"/>
+
+                                   Aspect="AspectFit"/>
 
                             </Frame>
 
-                            <!-- ИНФОРМАЦИЯ -->
-
                             <VerticalStackLayout Grid.Column="1"
-                                                 Padding="20,0,0,0"
-                                                 Spacing="4">
+
+                                             Padding="20,0,0,0"
+
+                                             Spacing="4">
 
                                 <Label FontAttributes="Bold"
-                                       FontSize="18">
+
+                                   FontSize="18">
 
                                     <Label.FormattedText>
 
                                         <FormattedString>
 
                                             <Span Text="{Binding Category}" />
+
                                             <Span Text=" | " />
+
                                             <Span Text="{Binding ProductName}" />
 
                                         </FormattedString>
@@ -111,45 +179,60 @@
 
                                 </Label>
 
-                                <Label Text="{Binding Description}" />
+                                <Label Text="{Binding Article,
+
+                                   StringFormat='Артикул: {0}'}"/>
+
+                                <Label Text="{Binding Description}"/>
 
                                 <Label Text="{Binding Creator,
-                                    StringFormat='Производитель: {0}'}"/>
 
+                                   StringFormat='Производитель: {0}'}"/>
                                 <Label Text="{Binding Supplier,
-                                    StringFormat='Поставщик: {0}'}"/>
+
+                                   StringFormat='Поставщик: {0}'}"/>
 
                                 <Label Text="{Binding Measure,
-                                    StringFormat='Ед. изм.: {0}'}"/>
+
+                                   StringFormat='Ед. изм.: {0}'}"/>
 
                                 <Label Text="{Binding StockText}"/>
 
                                 <HorizontalStackLayout>
 
                                     <Label Text="{Binding Price,
-                                           StringFormat='{0:F2} ₽'}"
-                                           TextColor="Red"
-                                           TextDecorations="Strikethrough"/>
+
+                                       StringFormat='{0:F2} ₽'}"
+
+                                       TextColor="Red"
+
+                                       TextDecorations="Strikethrough"/>
 
                                     <Label Text="{Binding FinalPrice,
-                                           StringFormat='  {0:F2} ₽'}"
-                                           FontAttributes="Bold"
-                                           FontSize="18"/>
+
+                                       StringFormat='  {0:F2} ₽'}"
+
+                                       FontAttributes="Bold"
+
+                                       FontSize="18"/>
 
                                 </HorizontalStackLayout>
 
                             </VerticalStackLayout>
 
-                            <!-- СКИДКА -->
-
                             <VerticalStackLayout Grid.Column="2"
-                                                 VerticalOptions="Center"
-                                                 HorizontalOptions="Center">
+
+                                             VerticalOptions="Center"
+
+                                             HorizontalOptions="Center">
 
                                 <Label Text="{Binding DiscountText}"
-                                       FontSize="24"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="Center"/>
+
+                                   FontSize="24"
+
+                                   FontAttributes="Bold"
+
+                                   HorizontalOptions="Center"/>
 
                             </VerticalStackLayout>
 
@@ -163,6 +246,8 @@
 
         </CollectionView>
 
-    </VerticalStackLayout>
+    </Grid>
+
+
 
 </ContentPage>
