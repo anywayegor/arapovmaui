@@ -150,30 +150,22 @@ public static class ApiService
     
     }
 
-    public static async Task<bool> DeleteProduct(int id)
-
+    public static async Task<string> DeleteProduct(int id)
     {
-
         try
-
         {
-
             var response =
-
                 await client.DeleteAsync($"api/Products/{id}");
 
-            return response.IsSuccessStatusCode;
+            if (response.IsSuccessStatusCode)
+                return "";
 
+            return await response.Content.ReadAsStringAsync();
         }
-
         catch
-
         {
-
-            return false;
-
+            return "Ошибка подключения к серверу";
         }
-
     }
 
     public static async Task<bool> AddProduct(
@@ -305,4 +297,38 @@ public static class ApiService
     }
 
     private static readonly HttpClient _httpClient = new HttpClient();
+
+    public static async Task<string?> UploadImage(FileResult image)
+    {
+        try
+        {
+            using var content = new MultipartFormDataContent();
+
+            using var stream =
+                await image.OpenReadAsync();
+
+            var fileContent =
+                new StreamContent(stream);
+
+            content.Add(
+                fileContent,
+                "file",
+                image.FileName);
+
+            var response =
+                await client.PostAsync(
+                    "api/Products/upload",
+                    content);
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            return await response.Content
+                .ReadAsStringAsync();
+        }
+        catch
+        {
+            return null;
+        }
+    }
 }

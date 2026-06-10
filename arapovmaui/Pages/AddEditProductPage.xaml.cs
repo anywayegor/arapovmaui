@@ -92,6 +92,41 @@ public partial class AddEditProductPage : ContentPage
     private async void SaveButton_Clicked(object sender, EventArgs e)
 
     {
+        if (!decimal.TryParse(PriceEntry.Text, out var price))
+        {
+            await DisplayAlert(
+                "Ошибка",
+                "Введите корректную цену",
+                "OK");
+            return;
+        }
+
+        if (price <= 0)
+        {
+            await DisplayAlert(
+                "Ошибка",
+                "Цена должна быть больше нуля",
+                "OK");
+            return;
+        }
+
+        if (!int.TryParse(QuantityEntry.Text, out var quantity))
+        {
+            await DisplayAlert(
+                "Ошибка",
+                "Введите корректное количество",
+                "OK");
+            return;
+        }
+
+        if (quantity < 0)
+        {
+            await DisplayAlert(
+                "Ошибка",
+                "Количество не может быть отрицательным",
+                "OK");
+            return;
+        }
 
         if (currentProduct != null)
 
@@ -104,16 +139,8 @@ public partial class AddEditProductPage : ContentPage
                 Article = ArticleEntry.Text ?? "",
 
                 Measure = MeasureEntry.Text ?? "",
-
-                Price = decimal.TryParse(
-
-                    PriceEntry.Text,
-
-                    out var price)
-
-                        ? price
-
-                        : 0,
+                
+                Price = price,
 
                 Discount = DiscountEntry.Text ?? "0",
 
@@ -169,67 +196,75 @@ public partial class AddEditProductPage : ContentPage
 
         }
 
+        string photoName = "";
+
+        if (selectedImage != null)
+        {
+            photoName =
+                await ApiService.UploadImage(selectedImage)
+                ?? "";
+        }
         var addRequest = new AddProductRequest
 
-        {
+            {
 
-            Article = ArticleEntry.Text ?? "",
+                Article = ArticleEntry.Text ?? "",
 
-            IdNameProduct =
+                IdNameProduct =
 
-                (NameProductPicker.SelectedItem as NameProduct)?.IdNameProduct ?? 0,
+                    (NameProductPicker.SelectedItem as NameProduct)?.IdNameProduct ?? 0,
 
-            Measure = MeasureEntry.Text ?? "",
+                Measure = MeasureEntry.Text ?? "",
 
-            Price = decimal.TryParse(
+                Price = decimal.TryParse(
 
-                PriceEntry.Text,
+                    PriceEntry.Text,
 
-                out var addPrice)
+                    out var addPrice)
 
-                    ? addPrice
+                        ? addPrice
 
-                    : 0,
+                        : 0,
 
-            IdSupplier =
+                IdSupplier =
 
-                (SupplierPicker.SelectedItem as Supplier)?.IdSupplier ?? 0,
+                    (SupplierPicker.SelectedItem as Supplier)?.IdSupplier ?? 0,
 
-            IdCreator =
+                IdCreator =
 
-                (CreatorPicker.SelectedItem as Creator)?.IdCreator ?? 0,
+                    (CreatorPicker.SelectedItem as Creator)?.IdCreator ?? 0,
 
-            IdCategoryProduct =
+                IdCategoryProduct =
 
-                (CategoryPicker.SelectedItem as CategoryProduct)?.IdCategoryProduct ?? 0,
+                    (CategoryPicker.SelectedItem as CategoryProduct)?.IdCategoryProduct ?? 0,
 
-            Discount = DiscountEntry.Text ?? "0",
+                Discount = DiscountEntry.Text ?? "0",
 
-            QuantityInStock = QuantityEntry.Text ?? "0",
+                QuantityInStock = QuantityEntry.Text ?? "0",
 
-            Description = DescriptionEntry.Text ?? "",
+                Description = DescriptionEntry.Text ?? "",
 
-            Photo = ""
+                Photo = photoName
 
         };
 
-        bool addResult = await ApiService.AddProduct(addRequest);
+            bool addResult = await ApiService.AddProduct(addRequest);
 
-        if (addResult)
+            if (addResult)
 
-        {
+            {
 
-            await DisplayAlert(
+                await DisplayAlert(
 
-                "Успех",
+                    "Успех",
 
-                "Товар добавлен",
+                    "Товар добавлен",
 
-                "OK");
+                    "OK");
 
-            await Navigation.PopAsync();
+                await Navigation.PopAsync();
 
-        }
+            }
 
         else
 
@@ -269,40 +304,25 @@ public partial class AddEditProductPage : ContentPage
 
             return;
 
-        bool result =
-
+        string error =
             await ApiService.DeleteProduct(
-
                 currentProduct.IdProduct);
 
-        if (result)
-
+        if (string.IsNullOrEmpty(error))
         {
-
             await DisplayAlert(
-
                 "Успех",
-
                 "Товар удалён",
-
                 "OK");
 
             await Navigation.PopAsync();
-
         }
-
         else
-
         {
-
             await DisplayAlert(
-
                 "Ошибка",
-
-                "Не удалось удалить товар",
-
+                error,
                 "OK");
-
         }
 
     }

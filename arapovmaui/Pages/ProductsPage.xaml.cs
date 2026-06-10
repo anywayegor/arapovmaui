@@ -105,27 +105,39 @@ public partial class ProductsPage : ContentPage
     }
 
     private void ApplyFilters()
-
     {
-
         IEnumerable<Product> filtered = _products;
 
         string text = SearchProduct.Text?.ToLower() ?? "";
 
         filtered = filtered.Where(x =>
-
-            x.ProductName.ToLower().Contains(text));
+            x.ProductName.ToLower().Contains(text) ||
+            x.Article.ToLower().Contains(text) ||
+            x.Category.ToLower().Contains(text) ||
+            x.Creator.ToLower().Contains(text) ||
+            x.Supplier.ToLower().Contains(text) ||
+            x.Description.ToLower().Contains(text) ||
+            x.Measure.ToLower().Contains(text) ||
+            x.Price.ToString().Contains(text) ||
+            x.Discount.Contains(text) ||
+            x.QuantityInStock.Contains(text));
 
         if (SupplierPicker.SelectedItem is Supplier supplier &&
-
             supplier.IdSupplier != null)
-
         {
-
             filtered = filtered.Where(x =>
+                x.IdSupplier == supplier.IdSupplier);
+        }
 
-                x.Supplier == supplier.Supplier1);
+        switch (SortPicker.SelectedIndex)
+        {
+            case 1:
+                filtered = filtered.OrderBy(x => x.QuantityInStock);
+                break;
 
+            case 2:
+                filtered = filtered.OrderByDescending(x => x.QuantityInStock);
+                break;
         }
 
         var result = filtered.ToList();
@@ -133,41 +145,11 @@ public partial class ProductsPage : ContentPage
         ProductsCollection.ItemsSource = result;
 
         CountLabel.Text = $"Товаров: {result.Count}";
-
     }
 
     private void SortPicker_SelectedIndexChanged(object sender, EventArgs e)
-
     {
-
-        switch (SortPicker.SelectedIndex)
-
-        {
-
-            case 0:
-
-                ProductsCollection.ItemsSource = _products;
-
-                break;
-
-            case 1:
-
-                ProductsCollection.ItemsSource =
-
-                    _products.OrderBy(x => x.QuantityInStock).ToList();
-
-                break;
-
-            case 2:
-
-                ProductsCollection.ItemsSource =
-
-                    _products.OrderByDescending(x => x.QuantityInStock).ToList();
-
-                break;
-
-        }
-
+        ApplyFilters();
     }
 
     private async void ExitButton_Clicked(object sender, EventArgs e)
