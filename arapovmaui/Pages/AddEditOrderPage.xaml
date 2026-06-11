@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+
+    x:Class="arapovmaui.Pages.AddEditOrderPage"
+
+    Title="Заказ">
+
+    <ScrollView>
+
+        <VerticalStackLayout
+
+            Padding="20"
+
+            Spacing="10">
+
+            <DatePicker
+
+                x:Name="OrderDatePicker"/>
+
+            <DatePicker
+
+                x:Name="DeliveryDatePicker"/>
+
+            <Picker
+
+                x:Name="UserPicker"
+
+                Title="Пользователь"/>
+
+            <Picker
+
+                x:Name="StatusPicker"
+
+                Title="Статус"/>
+
+            <Picker
+
+                x:Name="DeliveryStationPicker"
+
+                Title="Пункт выдачи"/>
+
+            <Entry
+
+                x:Name="CodeEntry"
+
+                Placeholder="Код получения"/>
+
+            <Button
+
+                Text="Сохранить"
+
+                Clicked="SaveButton_Clicked"/>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>

@@ -39,7 +39,7 @@ public partial class ProductsPage : ContentPage
             {
 
                 SortPicker.IsVisible = false;
-
+                SupplierPicker.IsVisible = false;
                 AddButton.IsVisible = false;
 
             }
@@ -132,11 +132,27 @@ public partial class ProductsPage : ContentPage
         switch (SortPicker.SelectedIndex)
         {
             case 1:
-                filtered = filtered.OrderBy(x => x.QuantityInStock);
+
+                filtered = filtered.OrderBy(x =>
+
+                    int.TryParse(x.QuantityInStock, out var q)
+
+                        ? q
+
+                        : 0);
+
                 break;
 
             case 2:
-                filtered = filtered.OrderByDescending(x => x.QuantityInStock);
+
+                filtered = filtered.OrderByDescending(x =>
+
+                    int.TryParse(x.QuantityInStock, out var q)
+
+                        ? q
+
+                        : 0);
+
                 break;
         }
 
@@ -204,6 +220,16 @@ public partial class ProductsPage : ContentPage
             new AddEditProductPage(product));
 
         ProductsCollection.SelectedItem = null;
+
+    }
+
+    private async void OrdersButton_Clicked(object sender, EventArgs e)
+
+    {
+
+        await Navigation.PushAsync(
+
+            new OrdersPage());
 
     }
 

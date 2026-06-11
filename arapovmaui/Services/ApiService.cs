@@ -331,4 +331,147 @@ public static class ApiService
             return null;
         }
     }
+
+    public static async Task<List<OrderItem>> GetOrders()
+
+    {
+
+        try
+
+        {
+
+            var orders =
+
+                await client.GetFromJsonAsync<List<OrderItem>>(
+
+                    "api/Orders");
+
+            return orders ?? new List<OrderItem>();
+
+        }
+
+        catch
+
+        {
+
+            return new List<OrderItem>();
+
+        }
+
+    }
+
+    public static async Task<List<StatusOrder>> GetStatuses()
+
+    {
+
+        try
+
+        {
+
+            var statuses =
+
+                await client.GetFromJsonAsync<List<StatusOrder>>(
+
+                    "api/StatusOrders");
+
+            return statuses ?? new List<StatusOrder>();
+
+        }
+
+        catch
+
+        {
+
+            return new List<StatusOrder>();
+
+        }
+
+    }
+
+    public static async Task<List<UserOrder>> GetUsers()
+
+    {
+
+        try
+
+        {
+
+            var users =
+
+                await client.GetFromJsonAsync<List<UserOrder>>(
+
+                    "api/Users");
+
+            return users ?? new List<UserOrder>();
+
+        }
+
+        catch
+
+        {
+
+            return new List<UserOrder>();
+
+        }
+
+    }
+    public static async Task<List<DeliveryStation>> GetDeliveryStations()
+
+    {
+
+        try
+
+        {
+
+            var stations =
+
+                await client.GetFromJsonAsync<List<DeliveryStation>>(
+
+                    "api/DeliveryStations");
+
+            return stations ?? new List<DeliveryStation>();
+
+        }
+
+        catch
+
+        {
+
+            return new List<DeliveryStation>();
+
+        }
+
+    }
+
+    public static async Task<bool> AddOrder(
+
+    AddOrderRequest request)
+
+    {
+
+        try
+
+        {
+
+            var response =
+
+                await client.PostAsJsonAsync(
+
+                    "api/Orders",
+
+                    request);
+
+            return response.IsSuccessStatusCode;
+
+        }
+
+        catch
+
+        {
+
+            return false;
+
+        }
+
+    }
 }

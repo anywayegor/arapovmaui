@@ -21,6 +21,14 @@
 
                FontSize="18"/>
 
+            <Button 
+
+                Text="Заказы"
+
+                Clicked="OrdersButton_Clicked"
+                BackgroundColor="#00FA9A"
+                TextColor="Black"/>
+
             <Button Grid.Column="1"
 
                 x:Name="AddButton"
@@ -81,9 +89,9 @@
 
                 <x:String>Без сортировки</x:String>
 
-                <x:String>Цена ↑</x:String>
+                <x:String>Количество↑</x:String>
 
-                <x:String>Цена ↓</x:String>
+                <x:String>Количество↓</x:String>
 
             </Picker.Items>
 
