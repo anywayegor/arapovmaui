@@ -13,10 +13,17 @@
     <ScrollView>
 
         <VerticalStackLayout
+            
 
             Padding="20"
 
             Spacing="10">
+
+            <Button
+                Text="Назад"
+                Clicked="BackButton_Clicked"
+                BackgroundColor="#00FA9A"
+                TextColor="Black"/>
 
             <DatePicker
 
@@ -54,7 +61,21 @@
 
                 Text="Сохранить"
 
-                Clicked="SaveButton_Clicked"/>
+                Clicked="SaveButton_Clicked"
+                
+            BackgroundColor="#7FFF00"
+            TextColor="Black"/>
+
+            <Button
+
+             x:Name="DeleteButton"
+        
+             Text="Удалить"
+
+            Clicked="DeleteButton_Clicked"
+                
+            BackgroundColor="#7FFF00"
+            TextColor="Black"/>
 
         </VerticalStackLayout>
 

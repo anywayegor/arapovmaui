@@ -28,6 +28,9 @@ public partial class ProductsPage : ContentPage
 
         base.OnAppearing();
 
+        SearchProduct.IsVisible =
+            AppData.CurrentUser != null;
+
         UserLabel.Text =
 
             AppData.CurrentUser?.FullName ?? "Гость";
@@ -41,6 +44,7 @@ public partial class ProductsPage : ContentPage
                 SortPicker.IsVisible = false;
                 SupplierPicker.IsVisible = false;
                 AddButton.IsVisible = false;
+                OrdersButton.IsVisible = false;
 
             }
 
@@ -53,7 +57,8 @@ public partial class ProductsPage : ContentPage
                 AddButton.IsVisible =
 
                     AppData.CurrentUser.Role == "Администратор";
-
+                OrdersButton.IsVisible =
+                    AppData.CurrentUser?.Role == "Администратор";
             }
 
         _products = await ApiService.GetProducts();

@@ -1,3 +1,5 @@
+using arapovmaui.Helpers;
+
 using arapovmaui.Models;
 
 using arapovmaui.Services;
@@ -28,13 +30,18 @@ public partial class OrdersPage : ContentPage
 
         OrdersCollection.ItemsSource = orders;
 
+        AddOrderButton.IsVisible =
+
+            AppData.CurrentUser?.Role == "Администратор";
+
+
     }
 
     private async void AddOrderButton_Clicked(
 
-    object sender,
+        object sender,
 
-    EventArgs e)
+        EventArgs e)
 
     {
 
@@ -44,35 +51,33 @@ public partial class OrdersPage : ContentPage
 
     }
 
-    private async void OrdersCollection_SelectionChanged(
+    private async void OrderTapped(
 
-    object sender,
+        object sender,
 
-    SelectionChangedEventArgs e)
+        TappedEventArgs e)
 
     {
 
-        if (e.CurrentSelection.Count == 0)
+        if (sender is Frame frame &&
 
-            return;
+            frame.BindingContext is OrderItem order)
 
-        var order =
+        {
 
-            e.CurrentSelection.FirstOrDefault() as OrderItem;
+            await Navigation.PushAsync(
 
-        if (order == null)
+                new AddEditOrderPage(order));
 
-            return;
-
-        await DisplayAlert(
-
-            "Заказ",
-
-            $"Заказ №{order.IdOrder}",
-
-            "OK");
-
-        OrdersCollection.SelectedItem = null;
+        }
 
     }
+
+    private async void BackButton_Clicked(
+        object sender,
+        EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
+
 }

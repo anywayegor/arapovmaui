@@ -474,4 +474,64 @@ public static class ApiService
         }
 
     }
+
+    public static async Task<bool> DeleteOrder(int id)
+
+    {
+
+        try
+
+        {
+
+            var response =
+
+                await client.DeleteAsync($"api/Orders/{id}");
+
+            return response.IsSuccessStatusCode;
+
+        }
+
+        catch
+
+        {
+
+            return false;
+
+        }
+
+    }
+
+    public static async Task<bool> UpdateOrder(
+
+    int id,
+
+    AddOrderRequest request)
+
+    {
+
+        try
+
+        {
+
+            var response =
+
+                await client.PutAsJsonAsync(
+
+                    $"api/Orders/{id}",
+
+                    request);
+
+            return response.IsSuccessStatusCode;
+
+        }
+
+        catch
+
+        {
+
+            return false;
+
+        }
+
+    }
 }

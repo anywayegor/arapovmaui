@@ -22,9 +22,8 @@
                FontSize="18"/>
 
             <Button 
-
+                x:Name="OrdersButton"
                 Text="Заказы"
-
                 Clicked="OrdersButton_Clicked"
                 BackgroundColor="#00FA9A"
                 TextColor="Black"/>

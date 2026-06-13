@@ -21,6 +21,12 @@
         </Grid.RowDefinitions>
 
         <Button
+                Text="Назад"
+                Clicked="BackButton_Clicked"
+                BackgroundColor="#00FA9A"
+                TextColor="Black"/>
+
+        <Button
 
             Grid.Row="0"
 
@@ -28,45 +34,104 @@
 
             Text="Добавить заказ"
 
-            Clicked="AddOrderButton_Clicked"/>
+            Clicked="AddOrderButton_Clicked"
+            
+            BackgroundColor="#7FFF00"
+            TextColor="Black"/>
 
         <CollectionView
 
             Grid.Row="1"
-            SelectionChanged="OrdersCollection_SelectionChanged"
+
             x:Name="OrdersCollection">
 
             <CollectionView.ItemTemplate>
 
                 <DataTemplate>
 
-                    <Frame Margin="5">
+                    <Frame
 
-                        <VerticalStackLayout>
+                        Margin="5"
 
-                            <Label
+                        Padding="10"
 
-                                Text="{Binding IdOrder}"
+                        BorderColor="Black">
 
-                                FontAttributes="Bold"/>
+                        <Frame.GestureRecognizers>
 
-                            <Label
+                            <TapGestureRecognizer
 
-                                Text="{Binding Status}"/>
+                                Tapped="OrderTapped"/>
 
-                            <Label
+                        </Frame.GestureRecognizers>
 
-                                Text="{Binding DeliveryStation}"/>
+                        <Grid ColumnDefinitions="*,120">
 
-                            <Label
+                            <VerticalStackLayout
 
-                                Text="{Binding OrderDate}"/>
+                                Grid.Column="0"
 
-                            <Label
+                                Spacing="3">
 
-                                Text="{Binding DeliveryDate}"/>
+                                <Label
 
-                        </VerticalStackLayout>
+                                    Text="{Binding IdOrder, StringFormat='Заказ №{0}'}"
+
+                                    FontAttributes="Bold"
+
+                                    FontSize="16"/>
+
+                                <Label
+
+                                    Text="{Binding Status, StringFormat='Статус: {0}'}"/>
+
+                                <Label
+
+                                    Text="{Binding DeliveryStation}"
+
+                                    LineBreakMode="WordWrap"/>
+
+                                <Label
+
+                                    Text="{Binding OrderDate, StringFormat='Дата заказа: {0:dd.MM.yyyy}'}"/>
+
+                            </VerticalStackLayout>
+
+                            <Frame
+
+                                Grid.Column="1"
+
+                                Margin="10,0,0,0"
+
+                                Padding="5"
+
+                                BorderColor="Black">
+
+                                <VerticalStackLayout
+
+                                    VerticalOptions="Center">
+
+                                    <Label
+
+                                        Text="Дата доставки"
+
+                                        HorizontalOptions="Center"
+
+                                        FontSize="12"/>
+
+                                    <Label
+
+                                        Text="{Binding DeliveryDate, StringFormat='{0:dd.MM.yyyy}'}"
+
+                                        FontAttributes="Bold"
+
+                                        HorizontalOptions="Center"/>
+
+                                </VerticalStackLayout>
+
+                            </Frame>
+
+                        </Grid>
 
                     </Frame>
 
